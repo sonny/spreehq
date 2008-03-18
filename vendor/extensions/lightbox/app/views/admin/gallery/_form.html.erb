@@ -1,0 +1,9 @@
+<p>
+  <label for="name">Name:</label><br/>
+	<%=error_message_on :gallery, :name%>
+  <%= f.text_field :name  %>
+</p>
+
+<div id="image-listing">
+  <%= render :partial => 'shared/images', :locals => {:viewable => @gallery} -%>
+</div>

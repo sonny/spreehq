@@ -1,0 +1,25 @@
+/** ================ begin: basic-table =================== */
+.basic-table {
+  border-collapse:  collapse;
+  border: solid 1px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 545px;
+}
+
+.basic-table th {
+  font-weight: bold;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border-bottom: 1px solid
+}
+
+.basic-table td {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 8px;
+  padding-right: 8px;	
+}
+/** ================ end: basic-table =================== */

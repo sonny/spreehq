@@ -1,0 +1,1 @@
+This file simply ensures that the viewable directory can be added to source control as well as copied over by the radiant:extensions:lightbox:update task. 
