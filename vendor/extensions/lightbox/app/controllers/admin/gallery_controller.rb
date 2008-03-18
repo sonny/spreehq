@@ -14,6 +14,10 @@ class Admin::GalleryController < ApplicationController
     end
   end
 
+  def new
+    @gallery = Gallery.new
+  end
+  
   def destroy
     Gallery.destroy(params[:id])
     flash[:notice] = "Gallery was successfully removed."
