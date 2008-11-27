@@ -17,15 +17,16 @@ Radiant::Initializer.run do |config|
 
   # Skip frameworks you're not going to use (only works if using vendor/rails).
   # To use Rails without a database, you must remove the Active Record framework
-  config.frameworks -= [ :action_web_service, :action_mailer ]
+  config.frameworks -= [ :action_mailer ]
   
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
   
-  # Only load the extensions named here, in the order given. By default all extensions in vendor/extensions are
-  # loaded, in alphabetical order. :all can be used as a placeholder for all extensions not explicitly named. 
+  # Only load the extensions named here, in the order given. By default all 
+  # extensions in vendor/extensions are loaded, in alphabetical order. :all 
+  # can be used as a placeholder for all extensions not explicitly named. 
   # config.extensions = [ :all ] 
 
   # Force all environments to use the same logger level 
@@ -38,13 +39,13 @@ Radiant::Initializer.run do |config|
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
     :session_key => '_radiant_session',
-    :secret      => 'asdfqwerfxcoivswqenadfasdfqewpfioutyqwel'
+    :secret      => '5890a9969a61beabb200b6d0e63e1d09dec80627'
   }
   
   # Use the database for sessions instead of the cookie-based default,
   # which shouldn't be used to store highly confidential information
   # (create the session table with 'rake db:sessions:create')
-  config.action_controller.session_store = :active_record_store
+  config.action_controller.session_store = :cookie_store
 
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
@@ -66,19 +67,21 @@ Radiant::Initializer.run do |config|
   config.action_view.field_error_proc = Proc.new do |html, instance|
     %{<div class="error-with-field">#{html} <small class="error">&bull; #{[instance.error_message].flatten.first}</small></div>}
   end
-end
+  
+  config.after_initialize do
+    # Add new inflection rules using the following format:
+    Inflector.inflections do |inflect|
+      inflect.uncountable 'config'
+      inflect.uncountable 'meta'
+    end
 
-# Add new inflection rules using the following format:
-Inflector.inflections do |inflect|
-  inflect.uncountable 'config'
-  inflect.uncountable 'meta'
-end
+    # Auto-require text filters
+    Dir["#{RADIANT_ROOT}/app/models/*_filter.rb"].each do |filter|
+      require_dependency File.basename(filter).sub(/\.rb$/, '')
+    end
 
-# Auto-require text filters
-Dir["#{RADIANT_ROOT}/app/models/*_filter.rb"].each do |filter|
-  require_dependency File.basename(filter).sub(/\.rb$/, '')
+    # Response Caching Defaults
+    ResponseCache.defaults[:directory] = ActionController::Base.page_cache_directory
+    ResponseCache.defaults[:logger]    = ActionController::Base.logger
+  end
 end
-
-# Response Caching Defaults
-ResponseCache.defaults[:directory] = ActionController::Base.page_cache_directory
-ResponseCache.defaults[:logger]    = ActionController::Base.logger
