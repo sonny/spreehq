@@ -6,12 +6,14 @@ class ExtensionRegistryExtension < Radiant::Extension
   description "Describe your extension here"
   url "http://yourwebsite.com/extension_registry"
   
-  # define_routes do |map|
-  #   map.connect 'admin/extension_registry/:action', :controller => 'admin/extension_registry'
-  # end
+  define_routes do |map|
+    #map.connect 'admin/extension_registry/test', :controller => 'admin/extensions'
+    map.resources :extensions
+    #map.resources :authors
+  end
   
   def activate
-    # admin.tabs.add "Extension Registry", "/admin/extension_registry", :after => "Layouts", :visibility => [:all]
+    admin.tabs.add "Extension Registry", "/admin/extension_registry", :after => "Layouts", :visibility => [:all]
   end
   
   def deactivate
