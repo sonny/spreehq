@@ -1,1 +1,16 @@
-WHAT UP G
+<h1>Extensions</h1>
+<br />
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Actions</th>
+  </tr>
+<% @extensions.each do |extension| %>
+  <tr>
+    <td><%= extension.name %></td>
+    <td><%= link_to "Edit", edit_object_url(extension) %> | <%= link_to "Delete", object_url(extension), :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<br />
+<%= link_to "Create New Extension", new_object_url %>
