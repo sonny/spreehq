@@ -1,0 +1,4 @@
+Run the migration:
+
+    rake radiant:extensions:extension_registry:migrate
+
